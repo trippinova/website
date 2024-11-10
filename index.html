@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ilylxrs World</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.1/locomotive-scroll.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.1/locomotive-scroll.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Add to head section of all HTML files -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+</head>
+<body>
+    <nav>
+        <div class="logo">ilylxrs</div>
+        <ul class="nav-links">
+        </ul>
+    </nav>
+
+    <main data-scroll-container>
+        <section class="hero">
+            <h1>ilylxrs World</h1>
+            <p>privacy isnt a thing in this sick world</p>
+            <div class="button-group">
+                <button class="cta-button" onclick="window.open('https://guns.lol/ilylxrs', '_blank')">Guns.lol</button>
+                <button class="cta-button" onclick="window.open('https://wanted.lol/ilylxrs', '_blank')">Wanted.lol</button>
+                <button class="cta-button" onclick="window.open('https://open.spotify.com/track/0M4fLEQ3h7Iz614lHAkNfP?si=304894c79f884fce', '_blank')">Spotify</button>
+            </div>
+            <div class="audio-player">
+                <audio id="myAudio" src="./nightmare.mp3"></audio>
+                <div class="audio-controls">
+                    <button id="playPauseBtn" class="player-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="time">00:00</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="circle-arrow" onclick="window.location.href='newpage.html'">
+            <i class="fas fa-arrow-right"></i> Next Page
+        </div>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>I'm quiet</h3>
+                <p>but silence is always better</p>
+            </div>
+            <div class="feature-card">
+                <h3>I Love</h3>
+                <p>Coding and god/jesus</p>
+            </div>
+            <div class="feature-card">
+                <h3>I Also Love</h3>
+                <p>Dominant Women 😝</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="myVideo" preload="auto">
+            <!-- 4K resolution -->
+            <source src="1108.mp4" type="video/mp4" media="(min-width: 1921px)">
+            <!-- 1080p resolution -->
+            <source src="1108.mp4" type="video/mp4" media="(min-width: 1025px)">
+            <!-- 720p resolution -->
+            <source src="1108.mp4" type="video/mp4" media="(min-width: 481px)">
+            <!-- Mobile resolution -->
+            <source src="1108.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
