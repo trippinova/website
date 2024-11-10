@@ -680,3 +680,25 @@ main, nav, footer {
         font-size: 20px;
     }
 }
+
+/* Add to all CSS files */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* For iOS momentum scrolling */
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* Update background image handling */
+body {
+    background-attachment: scroll; /* Instead of fixed for mobile */
+}
+
+@media (min-width: 768px) {
+    body {
+        background-attachment: fixed;
+    }
+}
