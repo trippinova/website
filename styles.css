@@ -642,61 +642,41 @@ main, nav, footer {
 /* Add these styles for the circle arrow */
 .circle-arrow {
     position: fixed;
-    right: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(135, 206, 250, 0.2);
-    backdrop-filter: blur(5px);
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 123, 255, 0.9);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    z-index: 100;
+    z-index: 1000;
+    color: white;
 }
 
 .circle-arrow:hover {
-    opacity: 0.8;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 0 15px rgba(135, 206, 250, 0.5);
+    transform: scale(1.1);
+    background: rgba(0, 123, 255, 1);
 }
 
-.circle-arrow i {
-    color: white;
-    font-size: 24px;
-}
-
-/* Add mobile responsiveness */
+/* Update mobile styles */
 @media (max-width: 768px) {
     .circle-arrow {
-        top: auto;
-        bottom: 20px;
+        display: flex;
+        top: 20px;
         right: 20px;
-        width: 45px;
-        height: 45px;
-        transform: none;
-    }
-
-    .circle-arrow i {
-        font-size: 20px;
-    }
-
-    /* Add spacing to prevent overlap with audio player */
-    .audio-player {
-        margin-bottom: 80px; /* Add space below the audio player */
+        width: 35px;
+        height: 35px;
     }
 }
 
-/* For very small screens */
-@media (max-width: 360px) {
+/* Hide arrow on desktop */
+@media (min-width: 769px) {
     .circle-arrow {
-        bottom: 15px;
-        right: 15px;
-        width: 40px;
-        height: 40px;
+        display: none;
     }
 }
 
