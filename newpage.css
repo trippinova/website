@@ -136,21 +136,21 @@ p {
 /* Tablets */
 @media (min-width: 481px) and (max-width: 1024px) {
     .background-image {
-        background-image: url('background-tablet.jpg');
+        background-image: url('websitebackground1.png');
     }
 }
 
 /* Desktops */
 @media (min-width: 1025px) {
     .background-image {
-        background-image: url('background-desktop.jpg');
+        background-image: url('websitebackground1.png');
     }
 }
 
 /* 4K displays */
 @media (min-width: 1921px) {
     .background-image {
-        background-image: url('background-4k.jpg');
+        background-image: url('websitebackground1.png');
     }
 }
 
