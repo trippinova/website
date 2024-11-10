@@ -129,7 +129,7 @@ p {
 /* Mobile devices */
 @media (max-width: 480px) {
     .background-image {
-        background-image: url('background-mobile.jpg');
+        background-image: url('websitebackground1.png');
     }
 }
 
