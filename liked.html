@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Liked Videos - ilylxrs World</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Add to head section of all HTML files -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <style>
         * {
             margin: 0;
@@ -165,6 +169,104 @@
 .watch-btn:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
+}
+
+/* Add these styles to the existing <style> section */
+
+/* Mobile-first grid layout */
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 2rem;
+    }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+    .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+    nav {
+        padding: 0.8rem 1rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin: 1rem 0;
+    }
+
+    .video-card {
+        padding: 1.5rem;
+    }
+
+    .video-title {
+        font-size: 1rem;
+    }
+
+    .watch-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Touch-friendly hover states */
+@media (hover: hover) {
+    .video-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .watch-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Non-touch devices */
+@media (hover: none) {
+    .video-card:active {
+        transform: translateY(-2px);
+    }
+
+    .watch-btn:active {
+        background: rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Add to all CSS files */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* For iOS momentum scrolling */
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* Update background image handling */
+body {
+    background-attachment: scroll; /* Instead of fixed for mobile */
+}
+
+@media (min-width: 768px) {
+    body {
+        background-attachment: fixed;
+    }
 }
     </style>
 </head>
