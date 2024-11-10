@@ -271,3 +271,83 @@ p {
 html {
     scroll-behavior: smooth;
 }
+
+/* Update existing mobile styles */
+@media (max-width: 767px) {
+    .content {
+        margin: 15vh auto;
+        padding: 1.5rem;
+        width: 92%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .video-boxes {
+        top: 130vh;
+        padding: 1rem;
+    }
+
+    .video-box {
+        width: 85%;
+        padding: 1.8rem;
+    }
+
+    .video-box i {
+        font-size: 2rem;
+    }
+
+    .video-box h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Adjust animation for mobile */
+    @keyframes floatContent {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+}
+
+/* Add touch-friendly interactions */
+@media (hover: none) {
+    .video-box:active {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .back-button:active {
+        background: rgba(75, 0, 130, 0.15);
+        transform: translateX(-3px);
+    }
+}
+
+/* Add to all CSS files */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* For iOS momentum scrolling */
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* Update background image handling */
+body {
+    background-attachment: scroll; /* Instead of fixed for mobile */
+}
+
+@media (min-width: 768px) {
+    body {
+        background-attachment: fixed;
+    }
+}
