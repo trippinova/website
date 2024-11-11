@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player - ilylxrs World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+            color: #fff;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: background-image 0.5s ease;
+            z-index: -1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .music-player {
+            max-width: 500px;
+            width: 90%;
+            margin: auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .song-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .artist {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+            padding: 0 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #1DB954;
+            border-radius: 5px;
+            transition: width 0.1s linear;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            color: #1DB954;
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            font-size: 2rem;
+        }
+
+        .playlist {
+            margin-top: 2rem;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .playlist-item.active {
+            background: rgba(29, 185, 84, 0.1);
+        }
+
+        .playlist-item-title {
+            margin-left: 1rem;
+        }
+
+        .progress-bar:hover {
+            height: 8px;
+        }
+
+        .progress-bar:hover .progress {
+            background: #1ed760;
+        }
+
+        @media (max-width: 768px) {
+            .music-player {
+                padding: 1.5rem;
+            }
+
+            .controls {
+                gap: 1.5rem;
+            }
+
+            .control-btn {
+                font-size: 1rem;
+            }
+
+            .play-btn {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+</head>
+<body>
+    <div class="background-image"></div>
+    
+    <nav>
+        <div class="logo">ilylxrs</div>
+        <div class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i> Back
+        </div>
+    </nav>
+
+    <div class="music-player">
+        <div class="song-info">
+            <h2 class="song-title">Current Song</h2>
+            <p class="artist">Artist Name</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="time-info">
+                <span class="current-time">0:00</span>
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn previous-btn">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="control-btn play-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="control-btn next-btn">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+
+        <div class="playlist">
+            <!-- Playlist items will be added here via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Your Spotify credentials
+        const clientId = '3c8d178ebe36488aa170a9fafc2ba392';
+        const redirectUri = 'http://localhost:3000/callback';
+        let accessToken = null;
+
+        // First, authenticate with Spotify
+        function authenticateWithSpotify() {
+            const scopes = [
+                'streaming',
+                'user-read-email',
+                'user-read-private',
+                'user-modify-playback-state',
+                'user-read-playback-state'
+            ];
+
+            const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes.join(' '))}`;
+            
+            window.location.href = authUrl;
+        }
+
+        // Check if we have a token in the URL (after authentication)
+        function checkUrlForToken() {
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            if (params.has('access_token')) {
+                accessToken = params.get('access_token');
+                initializePlayer();
+            } else {
+                authenticateWithSpotify();
+            }
+        }
+
+        // Initialize the Spotify Web Playback SDK
+        function initializePlayer() {
+            window.onSpotifyWebPlaybackSDKReady = () => {
+                player = new Spotify.Player({
+                    name: 'ilylxrs Web Player',
+                    getOAuthToken: cb => { cb(accessToken); }
+                });
+
+                // Error handling
+                player.addListener('initialization_error', ({ message }) => { console.error(message); });
+                player.addListener('authentication_error', ({ message }) => { console.error(message); });
+                player.addListener('account_error', ({ message }) => { console.error(message); });
+                player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+                // Playback status updates
+                player.addListener('player_state_changed', state => {
+                    if (state) {
+                        updatePlayerInfo(state.track_window.current_track);
+                        updatePlayButton(!state.paused);
+                        
+                        // Start progress tracking immediately
+                        startProgressUpdate();
+                    }
+                });
+
+                // Ready
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
+                    // Start playing your playlist
+                    playPlaylist(device_id, '5IXBeuSJ21MSEwyS91O4uK');
+                });
+
+                // Connect to the player
+                player.connect();
+
+                // Store player reference globally
+                window.spotifyPlayer = player;
+            };
+        }
+
+        // Play a specific playlist
+        function playPlaylist(deviceId, playlistId) {
+            fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    context_uri: `spotify:playlist:${playlistId}`,
+                    offset: { position: 0 },
+                    position_ms: 0
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+            });
+        }
+
+        // Update player UI
+        function updatePlayerInfo(track) {
+            document.querySelector('.song-title').textContent = track.name;
+            document.querySelector('.artist').textContent = track.artists[0].name;
+            document.querySelector('.background-image').style.backgroundImage = 
+                `url(${track.album.images[0].url})`;
+        }
+
+        function updatePlayButton(isPlaying) {
+            const playButton = document.querySelector('.play-btn i');
+            if (isPlaying) {
+                playButton.classList.replace('fa-play', 'fa-pause');
+            } else {
+                playButton.classList.replace('fa-pause', 'fa-play');
+            }
+        }
+
+        // Control functions
+        function togglePlay() {
+            player.togglePlay().then(() => {
+                player.getCurrentState().then(state => {
+                    if (state && !state.paused) {
+                        startProgressUpdate();
+                    } else {
+                        stopProgressUpdate();
+                    }
+                });
+            });
+        }
+
+        function nextTrack() {
+            window.spotifyPlayer.nextTrack();
+        }
+
+        function previousTrack() {
+            window.spotifyPlayer.previousTrack();
+        }
+
+        // Event listeners
+        document.querySelector('.play-btn').addEventListener('click', togglePlay);
+        document.querySelector('.next-btn').addEventListener('click', nextTrack);
+        document.querySelector('.previous-btn').addEventListener('click', previousTrack);
+
+        // Start the authentication process when the page loads
+        checkUrlForToken();
+
+        let progressInterval;
+
+        function formatTime(ms) {
+            const seconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgress(state) {
+            if (!state) return;
+            
+            const progress = (state.position / state.duration) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+            
+            // Update time displays
+            document.querySelector('.current-time').textContent = formatTime(state.position);
+            document.querySelector('.duration').textContent = formatTime(state.duration);
+        }
+
+        function startProgressUpdate() {
+            // Clear any existing interval
+            stopProgressUpdate();
+            
+            progressInterval = setInterval(async () => {
+                const state = await player.getCurrentState();
+                if (state && !state.paused) {
+                    updateProgress(state);
+                }
+            }, 100); // Update every 100ms for smooth timing
+        }
+
+        function stopProgressUpdate() {
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+        }
+
+        // Add click handler for progress bar
+        document.getElementById('progressBar').addEventListener('click', async (e) => {
+            const progressBar = document.getElementById('progressBar');
+            const clickPosition = (e.offsetX / progressBar.offsetWidth);
+            
+            const state = await player.getCurrentState();
+            if (state) {
+                const seekPosition = Math.floor(state.duration * clickPosition);
+                await player.seek(seekPosition);
+                
+                // Update progress immediately after seeking
+                updateProgress({
+                    ...state,
+                    position: seekPosition
+                });
+            }
+        });
+
+        // Add cleanup when leaving the page
+        window.addEventListener('beforeunload', () => {
+            stopProgressUpdate();
+        });
+    </script>
+</body>
+</html>
