@@ -269,6 +269,29 @@ body {
     }
 }
     </style>
+
+<script>
+    function openInstagram(url) {
+        const postId = url.split('/')[4];
+        const appUrl = `intent://instagram.com/reel/${postId}#Intent;package=com.instagram.android;scheme=https;end`;
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            window.location.href = appUrl;
+            setTimeout(() => {
+                window.location.href = url;
+            }, 2000);
+        } else {
+            window.location.href = url;
+        }
+    }
+    
+    document.querySelectorAll('.watch-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            openInstagram(href);
+        });
+    });
+</script>
 </head>
 <body>
     <nav>
@@ -394,16 +417,5 @@ body {
         </div>
     </main>
 
-    <script>
-        document.querySelectorAll('.watch-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const href = this.getAttribute('href');
-                
-                // Simply navigate to the Instagram URL
-                window.location.href = href;
-            });
-        });
-    </script>
 </body>
 </html>
