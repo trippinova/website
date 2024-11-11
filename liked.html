@@ -396,8 +396,8 @@ body {
                 const href = this.getAttribute('href');
                 const postId = href.split('/')[4]; // Extract the post ID
                 
-                // Create Instagram app URL with reel scheme
-                const instagramUrl = `instagram://reels/${postId}`;
+                // Create Instagram app URL with p scheme
+                const instagramUrl = `instagram://p/${postId}`;
                 
                 // Fallback to web URL if app doesn't open
                 setTimeout(() => {
