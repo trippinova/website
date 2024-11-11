@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player - ilylxrs World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+            color: #fff;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: background-image 0.5s ease;
+            z-index: -1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .music-player {
+            max-width: 500px;
+            width: 90%;
+            margin: auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .song-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .artist {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+            padding: 0 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #1DB954;
+            border-radius: 5px;
+            transition: width 0.1s linear;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            color: #1DB954;
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            font-size: 2rem;
+        }
+
+        .playlist {
+            margin-top: 2rem;
+        }
+
+        .playlist-item {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .playlist-item.active {
+            background: rgba(29, 185, 84, 0.2);
+        }
+
+        .playlist-item-title {
+            margin-left: 1rem;
+        }
+
+        .progress-bar:hover {
+            height: 8px;
+        }
+
+        .progress-bar:hover .progress {
+            background: #1ed760;
+        }
+
+        @media (max-width: 768px) {
+            .music-player {
+                padding: 1.5rem;
+            }
+
+            .controls {
+                gap: 1.5rem;
+            }
+
+            .control-btn {
+                font-size: 1rem;
+            }
+
+            .play-btn {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <nav>
+        <div class="logo">ilylxrs</div>
+        <div class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i> Back
+        </div>
+    </nav>
+
+    <div class="music-player">
+        <div class="song-info">
+            <h2 class="song-title">Select a song</h2>
+            <p class="artist">-</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="time-info">
+                <span class="current-time">0:00</span>
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn previous-btn">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="control-btn play-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="control-btn next-btn">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+
+        <div class="playlist" id="playlist">
+            <!-- Playlist items will be added here -->
+        </div>
+    </div>
+
+    <script>
+        // Song list - Update these paths to match your actual files
+        const songs = [
+            {
+                title: "Go Stupid",
+                artist: "Polo G",
+                src: "music/gostupid.mp3",
+                cover: "images/gostupid.jpg"
+            },
+            {
+                title: "500lbs",
+                artist: "Lil Tecca",
+                src: "music/500lbs.mp3",
+                cover: "images/500lbs.png"
+            },
+            {
+                title: "Getdown",
+                artist: "Zlutty4K",
+                src: "music/getdown.mp3",
+                cover: "images/getdown.png"
+            },
+            {
+                title: "Passout",
+                artist: "Fixupboy",
+                src: "music/passout.mp3",
+                cover: "images/Passout.png"
+            },
+            {
+                title: "Scrub",
+                artist: "Sleepy Hallow",
+                src: "music/scrub.mp3",
+                cover: "images/Scrub.png"
+            },
+        ];
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        const audio = new Audio();
+
+        function initPlayer() {
+            // Create playlist items
+            const playlist = document.getElementById('playlist');
+            playlist.innerHTML = ''; // Clear existing items
+            
+            songs.forEach((song, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.innerHTML = `${song.title} - ${song.artist}`;
+                item.onclick = () => playSong(index);
+                playlist.appendChild(item);
+            });
+
+            // Add event listeners
+            audio.addEventListener('timeupdate', updateProgress);
+            audio.addEventListener('ended', nextSong);
+            audio.addEventListener('loadedmetadata', () => {
+                document.querySelector('.duration').textContent = formatTime(audio.duration);
+            });
+
+            // Load first song
+            loadSong(currentSongIndex);
+        }
+
+        function loadSong(index) {
+            if (index >= 0 && index < songs.length) {
+                const song = songs[index];
+                audio.src = song.src;
+                document.querySelector('.song-title').textContent = song.title;
+                document.querySelector('.artist').textContent = song.artist;
+                
+                console.log('Loading cover image:', song.cover);
+                
+                if (song.cover) {
+                    document.querySelector('.background-image').style.backgroundImage = `url('${song.cover}')`;
+                }
+                
+                // Update playlist highlighting
+                document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+
+                // Reset progress
+                document.getElementById('progress').style.width = '0%';
+                document.querySelector('.current-time').textContent = '0:00';
+            }
+        }
+
+        function playSong(index) {
+            currentSongIndex = index;
+            loadSong(currentSongIndex);
+            
+            // Play the song
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isPlaying = true;
+                    updatePlayButton();
+                }).catch(error => {
+                    console.log("Playback failed:", error);
+                });
+            }
+        }
+
+        function togglePlay() {
+            if (!audio.src) {
+                playSong(0);
+                return;
+            }
+
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+            isPlaying = !isPlaying;
+            updatePlayButton();
+        }
+
+        function updatePlayButton() {
+            const icon = document.querySelector('.play-btn i');
+            icon.classList = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            playSong(currentSongIndex);
+        }
+
+        function previousSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            playSong(currentSongIndex);
+        }
+
+        function updateProgress() {
+            if (audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('progress').style.width = `${progress}%`;
+                document.querySelector('.current-time').textContent = formatTime(audio.currentTime);
+            }
+        }
+
+        function formatTime(seconds) {
+            if (!seconds || isNaN(seconds)) return '0:00';
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        // Event listeners for controls
+        document.querySelector('.play-btn').addEventListener('click', togglePlay);
+        document.querySelector('.next-btn').addEventListener('click', nextSong);
+        document.querySelector('.previous-btn').addEventListener('click', previousSong);
+
+        // Progress bar click
+        document.getElementById('progressBar').addEventListener('click', (e) => {
+            const progressBar = e.currentTarget;
+            const clickPosition = (e.offsetX / progressBar.offsetWidth);
+            if (audio.duration) {
+                audio.currentTime = clickPosition * audio.duration;
+            }
+        });
+
+        // Initialize the player when the page loads
+        document.addEventListener('DOMContentLoaded', initPlayer);
+    </script>
+</body>
+</html>
