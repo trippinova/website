@@ -395,49 +395,17 @@ body {
     </main>
 
     <script>
-        function generateThumbnail(iframe) {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            
-            iframe.addEventListener('load', function() {
-                try {
-                    const video = iframe.contentDocument.querySelector('video');
-                    if (video) {
-                        video.addEventListener('loadeddata', function() {
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                            
-                            const thumbnail = canvas.toDataURL('image/jpeg');
-                            const img = document.createElement('img');
-                            img.src = thumbnail;
-                            img.className = 'video-preview';
-                            
-                            const container = iframe.parentElement;
-                            container.replaceChild(img, iframe);
-                        });
-                    }
-                } catch (e) {
-                    console.log('Could not generate thumbnail:', e);
-                }
-            });
-        }
-
         document.querySelectorAll('.watch-btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const href = this.getAttribute('href');
                 const postId = href.split('/')[4]; // Extract the post ID
                 
-                // Try to open in Instagram app first
-                const instagramUrl = `instagram://reels/${postId}`;
+                // Create the web URL
                 const webUrl = `https://www.instagram.com/reel/${postId}`;
                 
-                // Try to open in app, fall back to web
-                setTimeout(() => {
-                    window.location.href = webUrl;
-                }, 2500);
-                window.location.href = instagramUrl;
+                // Open in new tab
+                window.open(webUrl, '_blank');
             });
         });
     </script>
